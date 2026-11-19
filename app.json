@@ -1,0 +1,33 @@
+{
+  "id": "9ba6225a-bb46-4121-98cf-89446d505bf3",
+  "name": "KM-DEV-SALES",
+  "publisher": "Kays Medical",
+  "version": "1.0.0.0",
+  "brief": "Outstanding Orders Report for salespeople.",
+  "description": "Outstanding Orders Report for salespeople: open and released sales orders and assembly orders with stock, reservation, purchase and margin information, plus the reservation tools. Standalone - it does not depend on the Order Release Worksheet extension.",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "25.0.0.0",
+  "idRanges": [
+    {
+      "from": 77500,
+      "to": 77599
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "14.0",
+  "target": "Cloud",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
