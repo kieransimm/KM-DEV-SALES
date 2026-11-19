@@ -201,8 +201,7 @@ codeunit 77502 "KMS Reservation Mgt."
           -Round(QtyBase / QtyPerUOM, 0.00001), -QtyBase, ForReservEntry);
         CreateReservEntry.CreateReservEntryFrom(TrackingSpecification);
         CreateReservEntry.CreateReservEntry(
-          L."No.", L."Variant Code", L."Location Code", L.Description, 0D, L."Shipment Date", 0,
-          "Reservation Status"::Reservation);
+          L."No.", L."Variant Code", L."Location Code", L.Description, 0D, L."Shipment Date", 0);
     end;
 
     local procedure GetDemandTableNo(var L: Record "KMS Outstanding Order Line"): Integer

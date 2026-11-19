@@ -210,7 +210,7 @@ codeunit 77500 "KMS Outstanding Orders Mgt."
         TempLine."Outstanding Qty. (Base)" := SalesLine."Outstanding Qty. (Base)";
         TempLine."Unit Price" := SalesLine."Unit Price";
         TempLine."Unit Cost (LCY)" := SalesLine."Unit Cost (LCY)";
-        TempLine."Unshipped Value (LCY)" := SalesLine."Outstanding Amt. Ex. VAT (LCY)";
+        TempLine."Unshipped Value (LCY)" := CalcUnshippedValueLCY(SalesHeader, SalesLine);
         TempLine."Unshipped Cost (LCY)" := Round(SalesLine."Unit Cost (LCY)" * SalesLine."Outstanding Quantity");
         TempLine."Margin (LCY)" := TempLine."Unshipped Value (LCY)" - TempLine."Unshipped Cost (LCY)";
         TempLine."Margin %" := CalcMarginPct(TempLine."Margin (LCY)", TempLine."Unshipped Value (LCY)");
@@ -1049,6 +1049,7 @@ codeunit 77500 "KMS Outstanding Orders Mgt."
         OrderKey: Text;
         SourceType: Enum "KMS Order Source";
         OrderNo: Code[20];
+        SourceTypeNo: Integer;
         ErrorText: Text;
         ErrorDetails: Text;
         Reserved: Integer;
@@ -1064,7 +1065,8 @@ codeunit 77500 "KMS Outstanding Orders Mgt."
             until Ord.Next() = 0;
 
         foreach OrderKey in OrderKeys do begin
-            SourceType := "KMS Order Source".FromInteger(StrToInt(SelectStr(1, ConvertStr(OrderKey, '|', ','))));
+            Evaluate(SourceTypeNo, SelectStr(1, ConvertStr(OrderKey, '|', ',')));
+            SourceType := "KMS Order Source".FromInteger(SourceTypeNo);
             OrderNo := CopyStr(CopyStr(OrderKey, StrPos(OrderKey, '|') + 1), 1, MaxStrLen(OrderNo));
             if OrderHasQtyToReserve(SourceType, OrderNo) then begin
                 if not CheckOrderReservable(SourceType, OrderNo, false) then
@@ -1644,6 +1646,19 @@ codeunit 77500 "KMS Outstanding Orders Mgt."
                 exit(GreyFlagTxt);
         end;
         exit(FlagTxt);
+    end;
+
+    /// <summary>Value still to ship, excluding VAT and after invoice discount, in local currency.</summary>
+    local procedure CalcUnshippedValueLCY(var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"): Decimal
+    var
+        Value: Decimal;
+    begin
+        if SalesLine.Quantity = 0 then
+            exit(0);
+        Value := (SalesLine."Line Amount" - SalesLine."Inv. Discount Amount") * SalesLine."Outstanding Quantity" / SalesLine.Quantity;
+        if (SalesHeader."Currency Code" <> '') and (SalesHeader."Currency Factor" <> 0) then
+            Value := Value / SalesHeader."Currency Factor";
+        exit(Round(Value));
     end;
 
     local procedure CalcMarginPct(Margin: Decimal; Value: Decimal): Decimal
