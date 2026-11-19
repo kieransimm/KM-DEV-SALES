@@ -52,6 +52,10 @@ table 77500 "KMS Sales Report Setup"
         {
             Caption = 'Assembly Header Related Orders Field';
         }
+        field(24; "Territory Field Name"; Text[80])
+        {
+            Caption = 'Customer Region Territory Field';
+        }
     }
 
     keys
@@ -81,5 +85,6 @@ table 77500 "KMS Sales Report Setup"
         "Created By Field No." := 50006;
         "Shelf Life Field Name" := 'Min. Remaining Shelf Life';
         "Related Orders Field Name" := 'Related_Orders';
+        "Territory Field Name" := 'Region Territory';
     end;
 }

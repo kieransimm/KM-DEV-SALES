@@ -57,6 +57,10 @@ page 77500 "KMS Sales Report Setup"
                 {
                     ToolTip = 'Specifies the name of the existing related orders field on the assembly header, used to link assembly orders to sales orders.';
                 }
+                field("Territory Field Name"; Rec."Territory Field Name")
+                {
+                    ToolTip = 'Specifies the name of an existing Region Territory field on the customer card. If it does not exist, the standard Territory Code is shown.';
+                }
             }
         }
     }

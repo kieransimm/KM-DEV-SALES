@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/AL-Go-Actions/v10.0/.Modules/settings.schema.json",
+  "country": "gb",
+  "artifact": "bcartifacts/sandbox/28.5/gb/latest",
+  "appFolders": [ "app" ],
+  "testFolders": [],
+  "bcptTestFolders": [],
+  "enableCodeCop": true,
+  "enableUICop": true
+}
